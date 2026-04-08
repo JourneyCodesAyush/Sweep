@@ -150,7 +150,7 @@ Sweep is about **safe, explicit cleanup** - it never deletes anything without te
 
 ## License
 
-This project is licensed under the [**MIT License**](./LICENSE).
+This project is licensed under the [**MIT License**](../LICENSE).
 
 You're free to use, modify, and distribute it.
 
