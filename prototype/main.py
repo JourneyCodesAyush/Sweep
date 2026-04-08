@@ -20,20 +20,23 @@ def find_dirs(search: str, root: str) -> list[Path]:
 
 def clean(directories: list[Path], yes: bool = False) -> None:
     for directory in directories:
-        if not yes:
-            confirm = input(f"Delete {str(directory)} [Y]es/[A]ll/[N]o:")
-            if confirm.lower() == "a":
-                yes = True
-                print(f"Removing {str(directory)}...")
-                shutil.rmtree(directory)
-            if confirm.lower() == "y":
-                print(f"Removing {str(directory)}...")
-                shutil.rmtree(directory)
+        try:
+            if not yes:
+                confirm = input(f"Delete {str(directory)} [Y]es/[A]ll/[N]o:")
+                if confirm.lower() == "a":
+                    yes = True
+                    print(f"Removing {str(directory)}...")
+                    shutil.rmtree(directory)
+                elif confirm.lower() == "y":
+                    print(f"Removing {str(directory)}...")
+                    shutil.rmtree(directory)
             else:
-                continue
-        else:
-            print(f"Removing {str(directory)}...")
-            shutil.rmtree(directory)
+                print(f"Removing {str(directory)}...")
+                shutil.rmtree(directory)
+        except PermissionError as e:
+            print(f"Permission denied due to {str(e)}")
+        except Exception as e:
+            print(f"Exception occurred: {str(e)}")
 
 
 def dry_run(directories: list[Path]) -> None:
