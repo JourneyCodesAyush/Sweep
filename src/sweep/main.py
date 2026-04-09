@@ -6,6 +6,14 @@ import argparse
 
 
 def calculate_size(folder: str) -> int:
+    """Calculate the total size of a folder recursively.
+
+    Args:
+        folder (str): Path to the folder.
+
+    Returns:
+        int: Total size in bytes.
+    """
     size = 0
     for current, _, files in os.walk(folder):
         for file in files:
@@ -14,6 +22,15 @@ def calculate_size(folder: str) -> int:
 
 
 def format_size(size: int) -> str:
+    """Format a size in bytes to a human-readable string.
+
+    Args:
+        size (int): Size in bytes.
+
+    Returns:
+        str: Human-readable size string (e.g. '1.23 MB').
+    """
+
     for unit in ["B", "KB", "MB", "GB"]:
         if size < 1024:
             return f"{size:.2f} {unit}"
@@ -22,6 +39,18 @@ def format_size(size: int) -> str:
 
 
 def find_dirs(search: str, root: str) -> list[Path]:
+    """Recursively find all directories matching a given name.
+
+    Skips descending into matched directories to avoid nested results.
+
+    Args:
+        search (str): Directory name to search for.
+        root (str): Root directory to search from.
+
+    Returns:
+        list[Path]: List of matched directory paths.
+    """
+
     results = []
 
     for current, dirs, _ in os.walk(root):
@@ -35,6 +64,16 @@ def find_dirs(search: str, root: str) -> list[Path]:
 
 
 def clean(directories: list[Path], yes: bool = False) -> None:
+    """Delete a list of directories with optional confirmation.
+
+    Args:
+        directories (list[Path]): List of directories to delete.
+        yes (bool): If True, skip confirmation prompt. Defaults to False.
+
+    Returns:
+        None
+    """
+
     size: int = 0
     dir_size: int = 0
     for directory in directories:
@@ -68,11 +107,29 @@ def clean(directories: list[Path], yes: bool = False) -> None:
 
 
 def dry_run(directories: list[Path]) -> None:
+    """Print directories without deleting them.
+
+    Args:
+        directories (list[Path]): List of directories to display.
+
+    Returns:
+        None
+    """
+
     for directory in directories:
         print(directory)
 
 
 def main() -> None:
+    """Entry point for the sweep CLI.
+
+    Parses arguments, finds target directories, and either
+    performs a dry run or deletes them based on the provided flags.
+
+    Returns:
+        None
+    """
+
     parser = argparse.ArgumentParser(description="Clean folders from directories")
 
     parser.add_argument("root", help="Target directory")
@@ -87,16 +144,11 @@ def main() -> None:
     )
 
     args = parser.parse_args()
-    # print(args)
-    # print(locations)
 
     locations = find_dirs(args.target, args.root)
     if not locations:
         print(f"No {args.target} folders found in {args.root}")
         return
-
-    # for location in locations:
-    #     print(str(location))
 
     if args.dry_run:
         dry_run(locations)
