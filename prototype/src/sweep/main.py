@@ -35,6 +35,8 @@ def clean(directories: list[Path], yes: bool = False) -> None:
                 shutil.rmtree(directory)
         except PermissionError as e:
             print(f"Permission denied due to {str(e)}")
+        except OSError as e:
+            print(f"OS Error occurred: {str(e)}")
         except Exception as e:
             print(f"Exception occurred: {str(e)}")
 
