@@ -5,6 +5,22 @@ import shutil
 import argparse
 
 
+def calculate_size(folder: str) -> int:
+    size = 0
+    for current, _, files in os.walk(folder):
+        for file in files:
+            size += os.path.getsize(os.path.join(current, file))
+    return size
+
+
+def format_size(size: int) -> str:
+    for unit in ["B", "KB", "MB", "GB"]:
+        if size < 1024:
+            return f"{size:.2f} {unit}"
+        size = int(size / 1024)
+    return f"{size:.2f} TB"
+
+
 def find_dirs(search: str, root: str) -> list[Path]:
     results = []
 
@@ -19,6 +35,8 @@ def find_dirs(search: str, root: str) -> list[Path]:
 
 
 def clean(directories: list[Path], yes: bool = False) -> None:
+    size: int = 0
+    dir_size: int = 0
     for directory in directories:
         try:
             if not yes:
@@ -26,19 +44,27 @@ def clean(directories: list[Path], yes: bool = False) -> None:
                 if confirm.lower() == "a":
                     yes = True
                     print(f"Removing {str(directory)}...")
+                    dir_size = calculate_size(str(directory))
                     shutil.rmtree(directory)
+                    size += dir_size
                 elif confirm.lower() == "y":
                     print(f"Removing {str(directory)}...")
+                    dir_size = calculate_size(str(directory))
                     shutil.rmtree(directory)
+                    size += dir_size
             else:
                 print(f"Removing {str(directory)}...")
+                dir_size = calculate_size(str(directory))
                 shutil.rmtree(directory)
+                size += dir_size
         except PermissionError as e:
             print(f"Permission denied due to {str(e)}")
         except OSError as e:
             print(f"OS Error occurred: {str(e)}")
         except Exception as e:
             print(f"Exception occurred: {str(e)}")
+
+    print(f"Freed up {format_size(size)}")
 
 
 def dry_run(directories: list[Path]) -> None:
