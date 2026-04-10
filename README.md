@@ -20,10 +20,10 @@ git clone https://github.com/JourneyCodesAyush/sweep.git
 cd sweep
 
 # Using uv (recommended)
-uv run prototype/main.py D:\ --dry-run
+uv run src/sweep/main.py D:\ --dry-run
 
 # Or with plain Python
-python prototype/main.py D:\ --dry-run
+python src/sweep/main.py D:\ --dry-run
 ```
 
 ---
@@ -65,13 +65,13 @@ python prototype/main.py D:\ --dry-run
 2. Run directly with `uv`:
 
    ```powershell
-   uv run prototype/main.py <path> [options]
+   uv run src/sweep/main.py <path> [options]
    ```
 
    Or with plain Python (3.14+):
 
    ```powershell
-   python prototype/main.py <path> [options]
+   python src/sweep/main.py <path> [options]
    ```
 
 ---
