@@ -4,6 +4,14 @@ import shutil
 from pathlib import Path
 
 
+class Color:
+    RED = "\033[31m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BOLD = "\033[1m"
+    RESET = "\033[0m"
+
+
 def calculate_size(folder: str) -> int:
     """Calculate the total size of a folder recursively.
 
@@ -73,36 +81,56 @@ def clean(directories: list[Path], yes: bool = False) -> None:
         None
     """
 
+    print(
+        Color.YELLOW
+        + f"Found {len(directories)} '{directories[0].name}'."
+        + Color.RESET
+    )
     size: int = 0
     dir_size: int = 0
+    deleted_dir_num: int = 0
     for directory in directories:
         try:
             if not yes:
                 confirm = input(f"Delete {str(directory)} [Y]es/[A]ll/[N]o:")
                 if confirm.lower() == "a":
                     yes = True
-                    print(f"Removing {str(directory)}...")
+                    print(Color.RED + f"Removing {str(directory)}..." + Color.RESET)
                     dir_size = calculate_size(str(directory))
                     shutil.rmtree(directory)
                     size += dir_size
+                    deleted_dir_num += 1
                 elif confirm.lower() == "y":
-                    print(f"Removing {str(directory)}...")
+                    print(Color.RED + f"Removing {str(directory)}..." + Color.RESET)
                     dir_size = calculate_size(str(directory))
                     shutil.rmtree(directory)
                     size += dir_size
+                    deleted_dir_num += 1
             else:
-                print(f"Removing {str(directory)}...")
+                print(Color.RED + f"Removing {str(directory)}..." + Color.RESET)
                 dir_size = calculate_size(str(directory))
                 shutil.rmtree(directory)
                 size += dir_size
+                deleted_dir_num += 1
         except PermissionError as e:
-            print(f"Permission denied due to {str(e)}")
+            print(
+                Color.BOLD
+                + Color.RED
+                + f"Permission denied due to {str(e)}"
+                + Color.RESET
+            )
         except OSError as e:
-            print(f"OS Error occurred: {str(e)}")
+            print(Color.BOLD + Color.RED + f"OS Error occurred: {str(e)}" + Color.RESET)
         except Exception as e:
-            print(f"Exception occurred: {str(e)}")
-
-    print(f"Freed up {format_size(size)}")
+            print(
+                Color.BOLD + Color.RED + f"Exception occurred: {str(e)}" + Color.RESET
+            )
+    print(
+        Color.YELLOW
+        + f"Swept {deleted_dir_num}/{len(directories)} folders."
+        + Color.RESET
+    )
+    print(Color.GREEN + f"Freed up {format_size(size)}" + Color.RESET)
 
 
 def dry_run(directories: list[Path]) -> None:
@@ -116,7 +144,7 @@ def dry_run(directories: list[Path]) -> None:
     """
 
     for directory in directories:
-        print(directory)
+        print(Color.YELLOW + str(directory) + Color.RESET)
 
 
 def main() -> None:
@@ -146,7 +174,11 @@ def main() -> None:
 
     locations = find_dirs(args.target, args.root)
     if not locations:
-        print(f"No {args.target} folders found in {args.root}")
+        print(
+            Color.YELLOW
+            + f"No {args.target} folders found in {args.root}"
+            + Color.RESET
+        )
         return
 
     if args.dry_run:
