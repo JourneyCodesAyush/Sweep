@@ -1,8 +1,7 @@
-import os
-from pathlib import Path
-import shutil
-
 import argparse
+import os
+import shutil
+from pathlib import Path
 
 
 def calculate_size(folder: str) -> int:

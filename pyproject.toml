@@ -4,11 +4,13 @@ version = "0.1.0"
 description = "A CLI tool to recursively find and delete unwanted folders like node_modules"
 readme = "README.md"
 license = "MIT"
-license-files = ["../LICENSE"]
+license-files = ["./LICENSE"]
 requires-python = ">=3.14"
 dependencies = []
 
 [dependency-groups]
 dev = [
+    "black>=26.3.1",
+    "isort>=8.0.1",
     "pyinstaller>=6.19.0",
 ]
