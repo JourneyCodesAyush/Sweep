@@ -81,11 +81,7 @@ def clean(directories: list[Path], yes: bool = False) -> None:
         None
     """
 
-    print(
-        Color.YELLOW
-        + f"Found {len(directories)} '{directories[0].name}'."
-        + Color.RESET
-    )
+    print(Color.YELLOW + f"Found {len(directories)} folder(s) to sweep." + Color.RESET)
     size: int = 0
     dir_size: int = 0
     deleted_dir_num: int = 0
@@ -161,7 +157,11 @@ def main() -> None:
 
     parser.add_argument("root", help="Target directory")
     parser.add_argument(
-        "--target", "-t", default="node_modules", help="Folder name to sweep"
+        "--target",
+        "-t",
+        default=["node_modules"],
+        nargs="+",
+        help="Folder name to sweep",
     )
     parser.add_argument(
         "--dry-run", action="store_true", help="Display folders' location to sweep"
@@ -172,11 +172,14 @@ def main() -> None:
 
     args = parser.parse_args()
 
-    locations = find_dirs(args.target, args.root)
+    locations = []
+    for target in args.target:
+        locations.extend(find_dirs(target, args.root))
+
     if not locations:
         print(
             Color.YELLOW
-            + f"No {args.target} folders found in {args.root}"
+            + f"No {', '.join(args.target)} folders found in {args.root}"
             + Color.RESET
         )
         return
