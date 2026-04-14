@@ -45,7 +45,7 @@ def format_size(size: int) -> str:
     return f"{size:.2f} TB"
 
 
-def find_dirs(search: str, root: str) -> list[Path]:
+def find_dirs(search: str, root: str, exclude: list[str] | None = None) -> list[Path]:
     """Recursively find all directories matching a given name.
 
     Skips descending into matched directories to avoid nested results.
@@ -61,6 +61,12 @@ def find_dirs(search: str, root: str) -> list[Path]:
     results = []
 
     for current, dirs, _ in os.walk(root):
+        if exclude is not None and any(
+            Path(current).is_relative_to(ex) for ex in exclude
+        ):
+            dirs.clear()
+            continue
+
         if search in dirs:
             found = Path(current) / search
             results.append(found)
@@ -164,6 +170,13 @@ def main() -> None:
         help="Folder name to sweep",
     )
     parser.add_argument(
+        "--exclude",
+        "-e",
+        default=None,
+        nargs="+",
+        help="Folder(s) to exclude while searching to sweep 'target(s)'",
+    )
+    parser.add_argument(
         "--dry-run", action="store_true", help="Display folders' location to sweep"
     )
     parser.add_argument(
@@ -174,7 +187,7 @@ def main() -> None:
 
     locations = []
     for target in args.target:
-        locations.extend(find_dirs(target, args.root))
+        locations.extend(find_dirs(target, args.root, args.exclude))
 
     if not locations:
         print(
