@@ -1,6 +1,7 @@
 # Sweep
 
 ![Python Version](https://img.shields.io/badge/python-3.14+-blue)
+![GitHub release](https://img.shields.io/github/v/release/JourneyCodesAyush/sweep?sort=semver)
 ![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-windows-lightgrey)
 
@@ -37,6 +38,10 @@ python src/sweep/main.py D:\ --dry-run
 - `--dry-run` flag to preview without deleting anything
 - Graceful handling of permission errors and unexpected failures
 - No third-party dependencies - stdlib only
+- `--target` accepts multiple folder names in one run
+- `--exclude` / `-e` flag to skip specific directories during search
+- Displays total disk space freed after deletion
+- Colored terminal output for better DX
 
 ---
 
@@ -51,9 +56,6 @@ python src/sweep/main.py D:\ --dry-run
 ---
 
 ## Installation
-
-> [!NOTE]
-> `sweep` is currently a Python prototype
 
 1. Clone the repository:
 
@@ -89,6 +91,8 @@ options:
   --target, -t TARGET     Folder name to sweep (default: node_modules)
   --dry-run               Display folders without deleting
   --yes, -y               Skip confirmation and delete all found folders
+  --target, -t TARGET [TARGET ...]  Folder names to sweep (default: node_modules)
+  --exclude, -e EXCLUDE [EXCLUDE ...] Paths to exclude during search
 ```
 
 ### Examples
@@ -108,6 +112,15 @@ sweep D:\ --target __pycache__
 
 # Combine flags
 sweep D:\ --target .git --dry-run
+
+# Sweep multiple targets at once
+sweep D:\ --target node_modules __pycache__
+
+# Exclude specific directories
+sweep D:\ --exclude D:\Important
+
+# Combine everything
+sweep D:\ --target node_modules .venv --exclude D:\Work --dry-run
 ```
 
 > [!TIP]
@@ -136,7 +149,6 @@ Delete D:\Projects\my-app\node_modules [Y]es/[A]ll/[N]o:
 Sweep is intentionally small in scope:
 
 - No logging to file
-- No multiple targets in one run
 - No cross-platform support
 - Windows-focused by design
 
