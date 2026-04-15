@@ -3,13 +3,7 @@ import os
 import shutil
 from pathlib import Path
 
-
-class Color:
-    RED = "\033[31m"
-    GREEN = "\033[32m"
-    YELLOW = "\033[33m"
-    BOLD = "\033[1m"
-    RESET = "\033[0m"
+from .colors import Color
 
 
 def calculate_size(folder: str) -> int:
