@@ -1,6 +1,8 @@
 import argparse
 import os
 import shutil
+import sys
+from importlib.metadata import version
 from pathlib import Path
 
 from .colors import Color
@@ -153,9 +155,20 @@ def main() -> None:
         None
     """
 
+    # This workaround because using argparse to add a new argument requires a positional argument to be passed
+    # Something like 'sweep -v <something>' for version to be displayed
+    if len(sys.argv) == 2:
+        if sys.argv[1] == "-v" or sys.argv[1] == "--version":
+            print(Color.GREEN + f"v{version('sweep')}" + Color.RESET)
+            return
+
     parser = argparse.ArgumentParser(description="Clean folders from directories")
 
     parser.add_argument("root", help="Target directory")
+
+    # For displaying in the '-h'/'--help' for the tool
+    parser.add_argument("-v", "--version", help="Current version of 'Sweep'")
+
     parser.add_argument(
         "--target",
         "-t",
