@@ -16,15 +16,31 @@
 
 ## Quick Start
 
+Run as a Python module or install as a CLI command.
+
 ```powershell
 git clone https://github.com/JourneyCodesAyush/sweep.git
 cd sweep
 
-# Using uv (recommended)
-uv run src/sweep/main.py D:\ --dry-run
+# (Optional but recommended) create virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 
-# Or with plain Python
-python src/sweep/main.py D:\ --dry-run
+# Install as a CLI command
+uv pip install -e . --link-mode=copy
+
+# Use it
+sweep D:\ --dry-run
+```
+
+> [!NOTE]
+> Installing in editable mode (`-e`) exposes sweep as a command in your current environment (via PATH).
+> The `--link-mode=copy` flag ensures proper behavior on Windows.
+
+### Or run without installing
+
+```powershell
+uv run python -m sweep D:\ --dry-run
 ```
 
 ---
@@ -42,6 +58,7 @@ python src/sweep/main.py D:\ --dry-run
 - `--exclude` / `-e` flag to skip specific directories during search
 - Displays total disk space freed after deletion
 - Colored terminal output for better DX
+- `--version` flag to display current installed version
 
 ---
 
@@ -55,40 +72,16 @@ python src/sweep/main.py D:\ --dry-run
 
 ---
 
-## Installation
-
-1. Clone the repository:
-
-   ```powershell
-   git clone https://github.com/JourneyCodesAyush/sweep.git
-   cd sweep
-   ```
-
-2. Run directly with `uv`:
-
-   ```powershell
-   uv run src/sweep/main.py <path> [options]
-   ```
-
-   Or with plain Python (3.14+):
-
-   ```powershell
-   python src/sweep/main.py <path> [options]
-   ```
-
----
-
 ## Usage
 
 ```
-usage: main.py [-h] [--target TARGET] [--dry-run] [--yes] root
+usage: sweep [-h] [--target TARGET [TARGET ...]] [--exclude EXCLUDE [EXCLUDE ...]] [--dry-run] [--yes] root
 
 positional arguments:
   root                    Target drive or directory (e.g. D:\)
 
 options:
   -h, --help              show this help message and exit
-  --target, -t TARGET     Folder name to sweep (default: node_modules)
   --dry-run               Display folders without deleting
   --yes, -y               Skip confirmation and delete all found folders
   --target, -t TARGET [TARGET ...]  Folder names to sweep (default: node_modules)
@@ -97,7 +90,14 @@ options:
 
 ### Examples
 
+> [!NOTE]
+> The following examples assume `sweep` is installed as a CLI command.
+> Otherwise, prefix commands with `python -m sweep`.
+
 ```powershell
+# Show installed version
+sweep --version
+
 # Preview what would be deleted
 sweep D:\ --dry-run
 
