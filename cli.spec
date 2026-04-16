@@ -1,7 +1,7 @@
 # cli.spec
 a = Analysis(
-    ['src/sweep/main.py'],
-    pathex=[],
+    ['src/sweep/__main__.py'],
+    pathex=['src'],
     binaries=[],
     datas=[],
     hiddenimports=[],
