@@ -5,7 +5,7 @@ import sys
 from importlib.metadata import version
 from pathlib import Path
 
-from .colors import Color
+from sweep.colors import Color
 
 
 def calculate_size(folder: str) -> int:
