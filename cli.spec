@@ -3,8 +3,10 @@ a = Analysis(
     ['src/sweep/__main__.py'],
     pathex=['src'],
     binaries=[],
-    datas=[],
-    hiddenimports=[],
+    datas=[
+        ('src/sweep', 'sweep'),  # include package files
+    ],
+    hiddenimports=['sweep', 'importlib.metadata'],
 )
 
 pyz = PYZ(a.pure)
