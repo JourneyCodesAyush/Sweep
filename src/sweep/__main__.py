@@ -7,6 +7,8 @@ from pathlib import Path
 
 from sweep.colors import Color
 
+DANGEROUS_TARGETS = {".git"}
+
 
 def calculate_size(folder: str) -> int:
     """Calculate the total size of a folder recursively.
@@ -192,6 +194,19 @@ def main() -> None:
     )
 
     args = parser.parse_args()
+
+    dangerous = [t for t in args.target if t in DANGEROUS_TARGETS]
+
+    if dangerous:
+        print(
+            Color.BOLD
+            + Color.YELLOW
+            + f"Warning: {', '.join(dangerous)} are dangerous targets and deletion may be irreversible."
+            + Color.RESET
+        )
+        confirm = input("Are you sure you want to proceed? [Y]es/[N]o: ")
+        if confirm.lower() != "y":
+            return
 
     locations = []
     for target in args.target:
