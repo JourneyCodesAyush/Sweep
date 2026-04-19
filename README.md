@@ -49,16 +49,17 @@ uv run python -m sweep D:\ --dry-run
 
 - Recursively searches a target drive or directory
 - Targets `node_modules` by default - configurable via `--target`
+- `--target` accepts multiple folder names in one run
+- `--exclude` / `-e` flag to skip specific directories during search
 - Per-folder confirmation prompt with `[Y]es/[A]ll/[N]o` options
 - `--yes` flag to skip confirmation entirely
 - `--dry-run` flag to preview without deleting anything
-- Graceful handling of permission errors and unexpected failures
-- No third-party dependencies - stdlib only
-- `--target` accepts multiple folder names in one run
-- `--exclude` / `-e` flag to skip specific directories during search
+- Warns before sweeping dangerous targets like `.git`
 - Displays total disk space freed after deletion
 - Colored terminal output for better DX
 - `--version` flag to display current installed version
+- Graceful handling of permission errors and unexpected failures
+- No third-party dependencies - stdlib only
 
 ---
 
@@ -149,7 +150,7 @@ Delete D:\Projects\my-app\node_modules [Y]es/[A]ll/[N]o:
 Sweep is intentionally small in scope:
 
 - No logging to file
-- No cross-platform support
+- Not tested on Linux / macOS
 - Windows-focused by design
 
 ---
