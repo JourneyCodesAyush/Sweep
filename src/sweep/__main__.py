@@ -49,6 +49,7 @@ def find_dirs(search: str, root: str, exclude: list[str] | None = None) -> list[
     Args:
         search (str): Directory name to search for.
         root (str): Root directory to search from.
+        exclude (list[str] | None): Paths to exclude. Defaults to None.
 
     Returns:
         list[Path]: List of matched directory paths.
