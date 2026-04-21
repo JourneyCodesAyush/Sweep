@@ -148,6 +148,26 @@ def dry_run(directories: list[Path]) -> None:
         print(Color.YELLOW + str(directory) + Color.RESET)
 
 
+def summarize(targets: list[str], directories: list[Path]) -> None:
+    """Print a summary of found directories grouped by target name.
+
+    Args:
+        targets (list[str]): List of target folder names being swept.
+        directories (list[Path]): List of found directory paths.
+
+    Returns:
+        None
+    """
+    summaries: list[tuple[str, int]] = []
+    for target in targets:
+        count = len([d for d in directories if d.name == target])
+        summaries.append((target, count))
+    print(Color.YELLOW + "Summary:" + Color.RESET)
+    for target, count in summaries:
+        print(Color.YELLOW + f"Found {count} {target} folder(s)" + Color.RESET)
+    print()
+
+
 def main() -> None:
     """Entry point for the sweep CLI.
 
@@ -220,6 +240,7 @@ def main() -> None:
         )
         return
 
+    summarize(args.target, locations)
     if args.dry_run:
         dry_run(locations)
     else:
