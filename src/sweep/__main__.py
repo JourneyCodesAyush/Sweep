@@ -225,7 +225,12 @@ def main() -> None:
             + Color.RESET
         )
         confirm = input("Are you sure you want to proceed? [Y]es/[N]o: ")
-        if confirm.lower() != "y":
+        if confirm.lower() == "n":
+            args.target = [t for t in args.target if t not in DANGEROUS_TARGETS]
+            if not args.target:
+                return
+        elif confirm.lower() != "y":
+            print(Color.YELLOW + "Invalid input. Please enter Y or N." + Color.RESET)
             return
 
     locations = []
