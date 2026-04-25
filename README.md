@@ -49,6 +49,7 @@ uv run python -m sweep D:\ --dry-run
 
 - Recursively searches a target drive or directory
 - Targets `node_modules` by default - configurable via `--target`
+- Shows a summary of found folders grouped by target before acting
 - `--target` accepts multiple folder names in one run
 - `--exclude` / `-e` flag to skip specific directories during search
 - Per-folder confirmation prompt with `[Y]es/[A]ll/[N]o` options
@@ -60,6 +61,23 @@ uv run python -m sweep D:\ --dry-run
 - `--version` flag to display current installed version
 - Graceful handling of permission errors and unexpected failures
 - No third-party dependencies - stdlib only
+
+---
+
+## Dangerous Targets
+
+When targeting directories like `.git`, sweep will warn you before proceeding:
+
+```txt
+Warning: .git are dangerous targets and deletion may be irreversible.
+Are you sure you want to proceed? [Y]es/[N]o:
+```
+
+| Input         | Behaviour                                         |
+| ------------- | ------------------------------------------------- |
+| `y`           | Proceed with all targets including dangerous ones |
+| `n`           | Remove dangerous targets, continue with safe ones |
+| anything else | Exit with invalid input message                   |
 
 ---
 
