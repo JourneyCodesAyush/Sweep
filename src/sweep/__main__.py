@@ -224,13 +224,20 @@ def main() -> None:
             + f"Warning: {', '.join(dangerous)} are dangerous targets and deletion may be irreversible."
             + Color.RESET
         )
-        confirm = input("Are you sure you want to proceed? [Y]es/[N]o: ")
-        if confirm.lower() == "n":
-            args.target = [t for t in args.target if t not in DANGEROUS_TARGETS]
-            if not args.target:
+        try:
+            confirm = input("Are you sure you want to proceed? [Y]es/[N]o: ")
+            if confirm.lower() == "n":
+                args.target = [t for t in args.target if t not in DANGEROUS_TARGETS]
+                if not args.target:
+                    print(Color.YELLOW + "No folder(s) left to sweep" + Color.RESET)
+                    return
+            elif confirm.lower() != "y":
+                print(
+                    Color.YELLOW + "Invalid input. Please enter Y or N." + Color.RESET
+                )
                 return
-        elif confirm.lower() != "y":
-            print(Color.YELLOW + "Invalid input. Please enter Y or N." + Color.RESET)
+        except KeyboardInterrupt, EOFError:
+            print(Color.RED + "\nAborted!" + Color.RESET)
             return
 
     locations = []
