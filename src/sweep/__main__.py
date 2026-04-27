@@ -86,7 +86,6 @@ def clean(directories: list[Path], yes: bool = False) -> None:
         None
     """
 
-    print(Color.YELLOW + f"Found {len(directories)} folder(s) to sweep." + Color.RESET)
     size: int = 0
     dir_size: int = 0
     deleted_dir_num: int = 0
