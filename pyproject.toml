@@ -1,6 +1,6 @@
 [project]
 name = "sweep"
-version = "0.3.0"
+version = "0.3.1"
 description = "A CLI tool to recursively find and delete unwanted folders like node_modules"
 readme = "README.md"
 license = "MIT"
