@@ -22,9 +22,21 @@ Run as a Python module or install as a CLI command.
 git clone https://github.com/JourneyCodesAyush/sweep.git
 cd sweep
 
-# (Optional but recommended) create virtual environment
+# (Optional but recommended) create a virtual environment
 python -m venv .venv
+# or
+uv venv .venv
+
+# Activate the virtual environment
+
+# Windows (PowerShell)
 .\.venv\Scripts\Activate.ps1
+
+# Windows (cmd)
+.\.venv\Scripts\activate.bat
+
+# macOS / Linux (bash/zsh)
+source .venv/bin/activate
 
 # Install as a CLI command
 uv pip install -e . --link-mode=copy
@@ -83,11 +95,11 @@ Are you sure you want to proceed? [Y]es/[N]o:
 
 ## Supported Platforms
 
-- Windows 10 / 11
-- Windows-focused by design (for now)
+- Windows 10 / 11 (tested)
+- macOS / Linux (should work, not fully tested)
 
 > [!NOTE]
-> Only tested on Windows
+> Sweep relies only on Python's standard library, so it is expected to work cross-platform.
 
 ---
 
@@ -168,8 +180,7 @@ Delete D:\Projects\my-app\node_modules [Y]es/[A]ll/[N]o:
 Sweep is intentionally small in scope:
 
 - No logging to file
-- Not tested on Linux / macOS
-- Windows-focused by design
+- Not explicitly tested on Linux / macOS (but designed to be cross-platform)
 
 ---
 
