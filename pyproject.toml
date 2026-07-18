@@ -10,7 +10,14 @@ dependencies = []
 
 [dependency-groups]
 dev = [
-    "black>=26.3.1",
-    "isort>=8.0.1",
     "pyinstaller>=6.19.0",
+    "ruff>=0.15.22",
 ]
+
+[tool.ruff]
+line-length = 88
+target-version = "py314"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
