@@ -74,7 +74,7 @@ uv run python -m sweep D:\ --dry-run
 - `--version` flag to display current installed version
 - Graceful handling of permission errors and unexpected failures
 - No third-party dependencies - stdlib only
-- Prunes matched and excluded directories during traversal — never walks into a folder it's already found
+- Prunes matched and excluded directories during traversal — roughly 90-120x faster than a naive, unpruned walk in local benchmarks (see [`tests/test_benchmark.py`](tests/test_benchmark.py))
 
 ---
 
