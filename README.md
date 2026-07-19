@@ -3,9 +3,10 @@
 ![Python Version](https://img.shields.io/badge/python-3.14+-blue)
 ![GitHub release](https://img.shields.io/github/v/release/JourneyCodesAyush/sweep?sort=semver)
 ![License](https://img.shields.io/badge/license-MIT-green)
-![Platform](https://img.shields.io/badge/platform-windows-lightgrey)
+![Platform](https://img.shields.io/badge/platform-windows%20%7C%20linux%20%7C%20macos-lightgrey)
+![CI](https://github.com/JourneyCodesAyush/sweep/actions/workflows/ci.yml/badge.svg)
 
-**Sweep** is a minimal, Windows-focused Python CLI tool to recursively find and delete unwanted folders (like `node_modules`) from a target drive or directory.
+**Sweep** is a minimal, Python CLI tool to recursively find and delete unwanted folders (like `node_modules`) from a target drive or directory.
 
 > Scans your drives, shows you what it finds, and cleans it up - safely and with your confirmation.
 
@@ -95,11 +96,7 @@ Are you sure you want to proceed? [Y]es/[N]o:
 
 ## Supported Platforms
 
-- Windows 10 / 11 (tested)
-- macOS / Linux (should work, not fully tested)
-
-> [!NOTE]
-> Sweep relies only on Python's standard library, so it is expected to work cross-platform.
+- Windows, Linux, and macOS — tested via CI on every commit.
 
 ---
 
@@ -157,6 +154,9 @@ sweep D:\ --target node_modules .venv --exclude D:\Work --dry-run
 > [!TIP]
 > Always run with `--dry-run` first to see what will be deleted before committing.
 
+> [!NOTE]
+> Examples above use Windows-style paths. On macOS/Linux, use standard paths (e.g. `sweep ~/projects --dry-run`).
+
 ---
 
 ## Confirmation Prompt
@@ -180,7 +180,6 @@ Delete D:\Projects\my-app\node_modules [Y]es/[A]ll/[N]o:
 Sweep is intentionally small in scope:
 
 - No logging to file
-- Not explicitly tested on Linux / macOS (but designed to be cross-platform)
 
 ---
 
