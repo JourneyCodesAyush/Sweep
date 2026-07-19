@@ -74,6 +74,7 @@ uv run python -m sweep D:\ --dry-run
 - `--version` flag to display current installed version
 - Graceful handling of permission errors and unexpected failures
 - No third-party dependencies - stdlib only
+- Prunes matched and excluded directories during traversal — never walks into a folder it's already found
 
 ---
 
@@ -185,7 +186,7 @@ Sweep is intentionally small in scope:
 
 ## Philosophy
 
-Sweep is about **safe, explicit cleanup** - it never deletes anything without telling you first, and `--dry-run` is always available. The goal is a tool that's fast, transparent, and trustworthy.
+Sweep is about **safe, explicit cleanup** - it never deletes anything without telling you first, and `--dry-run` is always available. The goal is a tool that's efficient, transparent, and trustworthy.
 
 ---
 
