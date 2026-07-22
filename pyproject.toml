@@ -8,6 +8,9 @@ license-files = ["LICENSE"]
 requires-python = ">=3.14"
 dependencies = []
 
+[project.scripts]
+sweep = "sweep.__main__:main"
+
 [build-system]
 requires = ["uv_build>=0.11.3,<0.12.0"]
 build-backend = "uv_build"
