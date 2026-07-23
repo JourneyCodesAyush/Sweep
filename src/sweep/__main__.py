@@ -1,7 +1,6 @@
 import argparse
 import os
 import shutil
-import sys
 from importlib.metadata import version
 from pathlib import Path
 
